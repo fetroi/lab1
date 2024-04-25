@@ -1,0 +1,84 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Задання вихідного одномірного масиву
+        double[] array = { -3.5, 2.8, -1.2, 4.1, -5.7, 6.3, 7.9 };
+
+        // а) Обчислення кількості від'ємних елементів
+        int negativeCount = 0;
+        foreach (double num in array)
+        {
+            if (num < 0)
+                negativeCount++;
+        }
+        Console.WriteLine("Кiлькiсть вiд'ємних елементiв: " + negativeCount);
+
+        // б) Обчислення суми модулів елементів після мінімального за модулем елементу
+        double minAbsValue = double.MaxValue;
+        int minAbsIndex = -1;
+        for (int i = 0; i < array.Length; i++)
+        {
+            double absValue = Math.Abs(array[i]);
+            if (absValue < minAbsValue)
+            {
+                minAbsValue = absValue;
+                minAbsIndex = i;
+            }
+        }
+        double sumAfterMinAbs = 0;
+        for (int i = minAbsIndex + 1; i < array.Length; i++)
+        {
+            sumAfterMinAbs += Math.Abs(array[i]);
+        }
+        Console.WriteLine("Сума модулiв елементiв пiсля мiнiмального за модулем елементу: " + sumAfterMinAbs);
+
+        // Заміна від'ємних елементів їх квадратами та сортування за зростанням
+        for (int i = 0; i < array.Length; i++)
+        {
+            if (array[i] < 0)
+            {
+                array[i] *= array[i]; // Квадрат від'ємного числа
+            }
+        }
+        Array.Sort(array);
+
+        // Виведення результатів на консоль
+        Console.WriteLine("Масив пiсля замiни вiд'ємних елементiв та сортування:");
+        foreach (double num in array)
+        {
+            Console.Write(num + " ");
+        }
+        Console.WriteLine();
+
+        // Задання двовимірного масиву
+        int[,] matrix = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+
+        // а) Поміняти місцями верхній правий та нижній лівий елементи
+        int temp = matrix[0, matrix.GetLength(1) - 1];
+        matrix[0, matrix.GetLength(1) - 1] = matrix[matrix.GetLength(0) - 1, 0];
+        matrix[matrix.GetLength(0) - 1, 0] = temp;
+
+        // б) Поміняти місцями нижній правий та верхній лівий елементи
+        temp = matrix[matrix.GetLength(0) - 1, matrix.GetLength(1) - 1];
+        matrix[matrix.GetLength(0) - 1, matrix.GetLength(1) - 1] = matrix[0, 0];
+        matrix[0, 0] = temp;
+
+        // Виведення результатів на консоль
+        Console.WriteLine("Двовимiрний масив пiсля перестановок:");
+        for (int i = 0; i < matrix.GetLength(0); i++)
+        {
+            for (int j = 0; j < matrix.GetLength(1); j++)
+            {
+                Console.Write(matrix[i, j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}
