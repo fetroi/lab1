@@ -1,0 +1,79 @@
+using System;
+
+// Структура, що представляє комплексне число
+struct ComplexNumber
+{
+    public double RealPart { get; set; } // Дійсна частина
+    public double ImaginaryPart { get; set; } // Уявна частина
+
+    // Конструктор для зручності створення комплексного числа
+    public ComplexNumber(double realPart, double imaginaryPart)
+    {
+        RealPart = realPart;
+        ImaginaryPart = imaginaryPart;
+    }
+
+    // Метод для виведення комплексного числа у зручному форматі
+    public override string ToString()
+    {
+        return $"{RealPart} + {ImaginaryPart}i";
+    }
+}
+
+class Program
+{
+    // Функція для розподілу комплексних чисел
+    static void DistributeComplexNumbers(ComplexNumber[] numbers, out ComplexNumber[] A, out ComplexNumber[] B)
+    {
+        // Ініціалізуємо списки для зберігання чисел в A та B
+        var listA = new System.Collections.Generic.List<ComplexNumber>();
+        var listB = new System.Collections.Generic.List<ComplexNumber>();
+
+        // Проходимося по кожному комплексному числу
+        foreach (var number in numbers)
+        {
+            // Розподіл чисел: якщо дійсна частина від'ємна, то в A, інакше в B
+            if (number.RealPart < 0)
+            {
+                listA.Add(number);
+            }
+            else
+            {
+                listB.Add(number);
+            }
+        }
+
+        // Перетворюємо списки у масиви
+        A = listA.ToArray();
+        B = listB.ToArray();
+    }
+
+    static void Main(string[] args)
+    {
+        // Задаємо комплексні числа
+        ComplexNumber[] numbers = {
+            new ComplexNumber(-2, 3),
+            new ComplexNumber(4, -1),
+            new ComplexNumber(0, 2),
+            new ComplexNumber(-5, -6),
+            new ComplexNumber(3, 1)
+        };
+
+        // Розподіл комплексних чисел
+        ComplexNumber[] A, B;
+        DistributeComplexNumbers(numbers, out A, out B);
+
+        // Виведення результатів
+        Console.WriteLine("Комплекснi числа в A:");
+        foreach (var number in A)
+        {
+            Console.WriteLine(number);
+        }
+
+        Console.WriteLine("\nКомплекснi числа в B:");
+        foreach (var number in B)
+        {
+            Console.WriteLine(number);
+        }
+    }
+}
