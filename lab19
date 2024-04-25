@@ -1,0 +1,57 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Заданий масив рядків символів
+        string[] strings = { "apple", "banana", "apple", "cherry", "banana", "banana" };
+
+        // а) Знайти кількість однакових рядків
+        Dictionary<string, int> stringCount = new Dictionary<string, int>();
+        foreach (string str in strings)
+        {
+            if (stringCount.ContainsKey(str))
+            {
+                stringCount[str]++;
+            }
+            else
+            {
+                stringCount[str] = 1;
+            }
+        }
+
+        Console.WriteLine("а) Кiлькiсть однакових рядкiв:");
+        foreach (var pair in stringCount)
+        {
+            Console.WriteLine($"{pair.Key}: {pair.Value}");
+        }
+
+        // б) Знайти кількість рядків, що починаються з n однакових символів
+        int n = 2; // Кількість однакових символів, з яких починаються рядки
+        int countStartWithNChars = 0;
+        foreach (string str in strings)
+        {
+            if (str.Length >= n)
+            {
+                string sub = str.Substring(0, n);
+                bool allSame = true;
+                for (int i = 1; i < sub.Length; i++)
+                {
+                    if (sub[i] != sub[0])
+                    {
+                        allSame = false;
+                        break;
+                    }
+                }
+                if (allSame)
+                {
+                    countStartWithNChars++;
+                }
+            }
+        }
+
+        Console.WriteLine($"б) Кiлькiсть рядкiв, що починаються з {n} однакових символiв: {countStartWithNChars}");
+    }
+}
